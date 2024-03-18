@@ -1,2 +1,9 @@
 server:
   port: 9090
+
+  
+# disable devtools
+spring:
+  devtools:
+    restart:
+      enabled: false

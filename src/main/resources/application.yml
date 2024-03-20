@@ -1,9 +1,20 @@
 server:
   port: 9090
 
-  
+eureka:
+  client:
+    serviceUrl:
+        defaultZone: http://localhost:8761/eureka/
+         
 # disable devtools
 spring:
-  devtools:
-    restart:
-      enabled: false
+  jpa:
+    hibernate:
+      ddl-auto: none
+    show-sql: true
+  datasource:
+    url: jdbc:mysql://localhost:3306/EOnboardServiceDB?useSSL=false&serverTimezone=GMT&createDatabaseIfNotExist=true
+    username: root
+    password: 
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  

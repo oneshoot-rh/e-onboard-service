@@ -1,8 +1,11 @@
 package ma.youcode.eonboardservice.dossiers;
 
 import java.util.UUID;
-import org.springframework.data.mongodb.repository.MongoRepository;
 
-public interface DossierRepository extends MongoRepository<Dossier, UUID>{
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public interface DossierRepository extends JpaRepository<Dossier, UUID>{
     
 }

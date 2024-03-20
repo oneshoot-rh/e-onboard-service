@@ -24,7 +24,7 @@ public class EOnboardServiceApplication {
 		SpringApplication.run(EOnboardServiceApplication.class, args);
 	}
 
-	@Bean
+	//@Bean
 	CommandLineRunner runner() {
 		return args -> {
 			List.of(

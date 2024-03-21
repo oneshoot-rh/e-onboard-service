@@ -1,6 +1,5 @@
 server:
   port: 9090
-
 eureka:
   client:
     serviceUrl:
@@ -8,6 +7,8 @@ eureka:
          
 # disable devtools
 spring:
+  application:
+    name: EOnboardService
   jpa:
     hibernate:
       ddl-auto: none

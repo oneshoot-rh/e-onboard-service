@@ -4,11 +4,13 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 import jakarta.annotation.Generated;
+import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -23,6 +25,8 @@ import ma.youcode.eonboardservice.candidates.Candidate;
 @ToString
 @Setter
 @Getter
+@Table(name = "dossiers")
+@Entity
 public class Dossier {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -30,7 +34,7 @@ public class Dossier {
     private UUID resumeId;
     private Boolean isEvaluated;
     private LocalDateTime createdAt;
-    @OneToOne(mappedBy = "dossier")
-    @JoinColumn(name = "candidate_id")
+    @OneToOne
+    @JoinColumn(name = "candidateId")
     private Candidate candidate;
 }

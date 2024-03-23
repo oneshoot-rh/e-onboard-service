@@ -38,9 +38,9 @@ public class EmailTemplate {
     private String subject;
     private String body;
 
-    @ManyToOne
-    @JoinColumn(name = "createdBy")
-    private User creator;
+    // @ManyToOne
+    // @JoinColumn(name = "createdBy")
+    // private User creator;
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "createdAt", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")

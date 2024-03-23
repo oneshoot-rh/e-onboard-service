@@ -2,7 +2,7 @@ start transaction;
 
 
 create table if not exists candidates (
-    id bigint primary key,
+    id bigint primary key auto_increment,
     firstName varchar(255) not null,
     lastName varchar(255) not null,
     email varchar(255) not null,
@@ -135,7 +135,7 @@ create table if not exists onboarding_plans (
     plannedAt timestamp not null,
     emailTemplateId bigint null,
     createdAt timestamp not null default current_timestamp,
-    createdBy bigint not null,
+    createdBy bigint  null,
     foreign key (emailTemplateId) references email_templates(id),
     foreign key (createdBy) references eonboardservicedb.users(id)
 );
@@ -259,6 +259,47 @@ create table if not exists timesheet_entries (
     foreign key (employeeId) references employees(id),
     foreign key (activityId) references project_activities(id)
 );
+
+
+create table if not exists jobOffers(
+    id bigint auto_increment primary key,
+    jobTitle varchar(255)  null,
+    jobDescription varchar(255)  null,
+    jobLocation varchar(255)  null,
+    jobType varchar(255)  null,
+    jobCategory varchar(255)  null,
+    jobStatus varchar(255)  null,
+    jobPostedDate timestamp not null default current_timestamp,
+    jobClosedDate timestamp  null ,
+    jobSalary varchar(255)  null,
+    jobExperience varchar(255)  null,
+    jobQualification varchar(255) not null,
+    jobSkills varchar(255)  null,
+    jobResponsibilities varchar(255) not null,
+    jobDeadline timestamp  null,
+    createdAt timestamp not null default current_timestamp
+);
+
+create table if not exists onboarding_plan_job_offers(
+    id bigint auto_increment primary key,
+    onboardingPlanId bigint not null,
+    jobOfferId bigint not null,
+    createdAt timestamp not null default current_timestamp,
+    foreign key (onboardingPlanId) references onboarding_plans(id),
+    foreign key (jobOfferId) references jobOffers(id)
+);
+
+insert into candidates (firstName, lastName, email, phoneNumber)
+values ('Mounir', 'bakkali', 'bk@gmail.com', '1234567890');
+
+
+insert into email_templates (name, subject, body, createdBy)
+values ('Onboarding Plan Email', 'Onboarding is schelduled', 'dear candidates your onboarding is scheduled', 1);
+
+
+
+insert into jobOffers (jobTitle, jobDescription, jobLocation, jobType, jobCategory, jobStatus, jobSalary, jobExperience, jobQualification, jobSkills, jobResponsibilities, jobDeadline)
+values ('Software Engineer', 'Software Engineer', 'Casablanca', 'Full Time', 'IT', 'Open', '10000', '2 years', 'Bac+5', 'Java, Spring, Angular', 'Develop software', '2021-12-31');
 
 
 

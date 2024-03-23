@@ -33,7 +33,7 @@ import ma.youcode.eonboardservice.dossiers.Dossier;
 public class Candidate {
     
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String firstName;
     private String lastName;
@@ -41,7 +41,7 @@ public class Candidate {
     private String phoneNumber;
     @Temporal(TemporalType.TIMESTAMP)
     private LocalDateTime createdAt;
-    @OneToOne
-    @JsonIgnore
-    private Dossier dossier;
+    // @OneToOne
+    // @JsonIgnore
+    // private Dossier dossier;
 }

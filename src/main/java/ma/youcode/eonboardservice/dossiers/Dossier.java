@@ -29,7 +29,7 @@ import ma.youcode.eonboardservice.candidates.Candidate;
 @Entity
 public class Dossier {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private UUID id;
     private UUID resumeId;
     private Boolean isEvaluated;

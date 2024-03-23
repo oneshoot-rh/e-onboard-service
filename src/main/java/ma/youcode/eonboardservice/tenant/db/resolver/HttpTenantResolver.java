@@ -13,6 +13,10 @@ public class HttpTenantResolver implements TenantResolver<HttpServletRequest> {
     public String resolveTenantId(HttpServletRequest request) {
         String forwardedHeader = request.getHeader("forwarded");
         String quoted = "host=\"";
-        return (((forwardedHeader.split(forwardedHeader.contains(quoted) ? quoted : "host=")[1]).split(";"))[0]).split("\\.")[0];
+        //return (((forwardedHeader.split(forwardedHeader.contains(quoted) ? quoted : "host=")[1]).split(";"))[0]).split("\\.")[0];
+        request.getHeaderNames().asIterator().forEachRemaining(header -> {
+            log.info("Header: {}", header);
+        });
+        return request.getHeader("x-tenant-id") == null ? "myOrg" : request.getHeader("x-tenant-id");
     }
 }

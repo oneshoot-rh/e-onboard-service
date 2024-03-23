@@ -1,6 +1,7 @@
 package ma.youcode.eonboardservice.onboarding;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import org.apache.commons.lang3.builder.ToStringExclude;
 
@@ -12,7 +13,9 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
@@ -22,7 +25,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import ma.youcode.eonboardservice.candidates.Candidate;
 import ma.youcode.eonboardservice.email.EmailTemplate;
+import ma.youcode.eonboardservice.joboffers.JobOffer;
 import ma.youcode.eonboardservice.tenant.User;
 
 @AllArgsConstructor
@@ -36,7 +41,7 @@ import ma.youcode.eonboardservice.tenant.User;
 public class OnboardingPlan {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String name;
@@ -52,11 +57,21 @@ public class OnboardingPlan {
     @JsonIgnore
     private EmailTemplate emailTemplate;
 
-    @ManyToOne
-    @JoinColumn(name = "createdBy")
-    @JsonIgnore
+    @OneToMany
     @ToStringExclude
-    private User creator;
+    @JoinTable(name = "onboarding_plan_job_offers", joinColumns = @JoinColumn(name = "onboardingPlanId"), inverseJoinColumns = @JoinColumn(name = "jobOfferId"))
+    private List<JobOffer> jobOffer;
+
+    // @ManyToOne
+    // @JoinColumn(name = "createdBy")
+    // @JsonIgnore
+    // @ToStringExclude
+    // private User creator;
+
+    @OneToMany
+    @JoinTable(name = "onboading_plan_invitees", joinColumns = @JoinColumn(name = "onboardingPlanId"), inverseJoinColumns = @JoinColumn(name = "candidateId"))
+    @ToStringExclude
+    private List<Candidate> candidates;
 
 
     @Temporal(TemporalType.TIMESTAMP)

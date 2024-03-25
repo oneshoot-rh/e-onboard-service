@@ -37,7 +37,7 @@ public class EmailResource {
         return ResponseEntity.ok(emailService.createEmailSettings(emailSettings));
     }
 
-    @PostMapping("/email-settings")
+    @GetMapping("/email-settings")
     public ResponseEntity<List<EmailSettings>> getAllEmailSettings() {
         return ResponseEntity.ok(emailService.getAllEmailSettings());
     }

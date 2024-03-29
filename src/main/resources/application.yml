@@ -1,5 +1,7 @@
 server:
   port: 9090
+  servlet:
+    context-path: /api
 eureka:
   client:
     serviceUrl:
@@ -9,10 +11,22 @@ eureka:
 spring:
   application:
     name: EOnboardService
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: ${KEYCLOAK_ISSUER_URI:http://localhost:9999/realms/OneShoot}
   jpa:
     hibernate:
       ddl-auto: none
     show-sql: true
+  kafka:
+    bootstrap-servers: localhost:9092
+    consumer:
+      group-id: group_id
+      auto-offset-reset: earliest
+      properties:
+        spring.json.trusted.packages: "*"
   datasource:
     url: jdbc:mysql://localhost:3306/EOnboardServiceDB?useSSL=false&serverTimezone=GMT&createDatabaseIfNotExist=true
     username: root

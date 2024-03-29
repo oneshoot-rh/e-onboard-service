@@ -1,5 +1,6 @@
 package ma.youcode.eonboardservice.config;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -8,13 +9,16 @@ import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 public class SecurityConfig {
+    @Value("${server.servlet.context-path:''}")
+    private String contextPath;
     
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
                 .authorizeHttpRequests(request ->
                     request
-                        .requestMatchers("/actuator/**").permitAll()
+                        .requestMatchers(contextPath+"/actuator/**").permitAll()
+                        .requestMatchers(contextPath+"/v1/**").permitAll()   // just for testing purposes
                         .anyRequest().authenticated()
                 )
                 .oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt)

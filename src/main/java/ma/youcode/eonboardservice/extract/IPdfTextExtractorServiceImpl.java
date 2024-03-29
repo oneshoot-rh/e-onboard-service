@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -66,7 +67,9 @@ public class IPdfTextExtractorServiceImpl implements IPdfTextExtractorService {
             textStripper.setAddMoreFormatting(true);
 
             String text = textStripper.getText(document);
-            return categorizeText(text);
+            var categorized=  categorizeText(text);
+            categorized.put("Candidate ID", UUID.randomUUID().toString());
+            return categorized;
         } catch (IOException e) {
             e.printStackTrace();
         }

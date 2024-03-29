@@ -17,6 +17,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 @Service
 @Slf4j
@@ -38,6 +39,7 @@ public class ResumeProcessor {
 
     public UploadReport processResumes(MultipartFile[] files) {
         List<UploadFileState> uploadFileStates = new ArrayList<>();
+        var candidateData = new ArrayList<Map<String, String>>();
         int uploadedFiles = 0;
         // store and extract functionalities
         for (MultipartFile file : files) {
@@ -49,6 +51,8 @@ public class ResumeProcessor {
                 uploadedFiles++;
                 try {
                     Map<String, String> extractedObjectFromPdf = extractorService.extractTextFromPdf(fileDistination);
+                    extractedObjectFromPdf.put("resumeId", file.getOriginalFilename());
+                    candidateData.add(extractedObjectFromPdf);
                     log.info("Text extracted successfully");
                     isProcessed = true;
                     log.info("Processing extracted text");
@@ -91,6 +95,8 @@ public class ResumeProcessor {
                 .uploadedFiles(uploadFileStates)
                 .uploadDate(java.time.LocalDateTime.now())
                 .uploadDirectory(uploadDistination)
+                .processID(UUID.randomUUID())
+                .candidateData(candidateData)
                 .build();
     }
 }

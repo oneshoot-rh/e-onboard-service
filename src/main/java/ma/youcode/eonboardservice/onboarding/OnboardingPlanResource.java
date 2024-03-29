@@ -10,7 +10,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("/api/v1/onboarding-plans")
+@RequestMapping("/v1/onboarding-plans")
 @RequiredArgsConstructor
 public class OnboardingPlanResource {
     private final OnboardingPlanService onboardingPlanService;

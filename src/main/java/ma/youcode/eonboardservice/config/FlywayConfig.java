@@ -34,11 +34,11 @@ public class FlywayConfig {
             RestTemplate restTemplate = new RestTemplate();
             
             repository.findAll().forEach(tenant -> {
-                String tenantId = tenant.getOrganizationName();
+                String schema = new StringBuilder().append("eonbdb_").append(tenant.getDomainName()).toString();
                 Flyway flyway = Flyway.configure()
                         .locations("db/migration/tenants")
                         .dataSource(dataSource)
-                        .schemas(tenantId)
+                        .schemas(schema)
                         .load();
                 flyway.migrate();
             });

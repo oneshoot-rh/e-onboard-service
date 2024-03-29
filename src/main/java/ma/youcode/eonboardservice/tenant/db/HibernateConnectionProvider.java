@@ -34,13 +34,15 @@ public class HibernateConnectionProvider implements MultiTenantConnectionProvide
     public Connection getConnection(String tenantIdentifier) throws SQLException {
         var connection = dataSource.getConnection();
         //connection.setSchema(tenantIdentifier);
-        connection.createStatement().execute("USE " + tenantIdentifier); //instead of connection.setSchema(tenantIdentifier); when using MySQL
-        log.info("Connection to tenant {} created", tenantIdentifier);
+        String Schema = tenantIdentifier.equals(TenantContext.DEFAULT_TENANT_ID) ? TenantContext.DEFAULT_TENANT_ID :  new StringBuilder().append("eonbdb_").append(tenantIdentifier).toString();
+        connection.createStatement().execute("USE " + Schema); //instead of connection.setSchema(tenantIdentifier); when using MySQL
+        log.info("Connection to tenant {} created", Schema);
         return  connection;
     }
 
     @Override
     public void releaseConnection(String tenantIdentifier, Connection connection) throws SQLException {
+        
         connection.setSchema(TenantContext.DEFAULT_TENANT_ID);
         connection.close();
     }

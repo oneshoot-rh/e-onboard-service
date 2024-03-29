@@ -16,17 +16,20 @@ import java.util.List;
 public class Tenant {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+    private Long id;
 
     @Column(name = "organization_name")
-    String organizationName;
+    private String organizationName;
     @Column(name = "requestor_role")
-    String requestorRole;
+    private String requestorRole;
+
+    @Column(name = "domain_name")
+    private String domainName;
     @Column(name = "requestor_professional_email")
-    String requestorProfessionalEmail;
+    private String requestorProfessionalEmail;
 
     @OneToMany(cascade = CascadeType.ALL,mappedBy = "tenant")
-    List<User> users = new ArrayList<>();
+    private List<User> users = new ArrayList<>();
 
 
     public void addUser(User user) {

@@ -38,6 +38,7 @@ public class IPdfTextExtractorServiceImpl implements IPdfTextExtractorService {
     @Override
     public  Map<String,String> extractTextFromPdf(String pdfPath) throws FileNotFoundException {
         File file = new File(pdfPath);
+        log.info("Extracting text from pdf file: {}", file.getName());
         try (PDDocument document = PDDocument.load(file)) {
             PDFTextStripper textStripper = new PDFTextStripper() {
                 private boolean isHeader = false;

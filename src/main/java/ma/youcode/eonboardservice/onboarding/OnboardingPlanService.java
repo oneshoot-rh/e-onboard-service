@@ -42,5 +42,11 @@ public class OnboardingPlanService {
         var onboardingPlanSaved = onboardingPlanRepository.save(onboardingPlan);
         return onboardingPlanSaved;
     }
+
+
+
+    public List<OnboardingPlan> getAllOnboardingPlans() {
+        return onboardingPlanRepository.findAll();
+    }
     
 }

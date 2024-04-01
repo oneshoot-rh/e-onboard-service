@@ -9,16 +9,14 @@ import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 public class SecurityConfig {
-    @Value("${server.servlet.context-path:''}")
-    private String contextPath;
     
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
                 .authorizeHttpRequests(request ->
                     request
-                        .requestMatchers(contextPath+"/actuator/**").permitAll()
-                        .requestMatchers(contextPath+"/v1/**").permitAll()   // just for testing purposes
+                        .requestMatchers("/actuator/**").permitAll()
+                        //.requestMatchers("/v1/**").permitAll()   // just for testing purposes
                         .anyRequest().authenticated()
                 )
                 .oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt)

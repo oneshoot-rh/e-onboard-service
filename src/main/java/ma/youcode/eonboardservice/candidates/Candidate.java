@@ -6,7 +6,10 @@ import java.util.UUID;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.annotation.Generated;
+import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -21,6 +24,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import ma.youcode.eonboardservice.dossiers.Dossier;
+import ma.youcode.eonboardservice.utils.UUIDToStringConverter;
 
 
 @ToString
@@ -39,6 +43,15 @@ public class Candidate {
     private String lastName;
     private String email;
     private String phoneNumber;
+    private String linkedIn;
+    private String skills;
+    private String certifications;
+    private String experience;
+    private int score;
+    @Convert(converter = UUIDToStringConverter.class)
+    private UUID candidateId;
+    @Enumerated(EnumType.STRING)
+    private CandidateStatus status; 
     @Temporal(TemporalType.TIMESTAMP)
     private LocalDateTime createdAt;
     // @OneToOne

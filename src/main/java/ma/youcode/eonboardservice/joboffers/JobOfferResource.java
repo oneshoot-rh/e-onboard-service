@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("/api/v1/job-offers")
+@RequestMapping("/cl/job-offers")
 @RequiredArgsConstructor
 public class JobOfferResource {
     

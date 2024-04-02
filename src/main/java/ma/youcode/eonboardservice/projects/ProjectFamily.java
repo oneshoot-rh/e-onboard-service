@@ -1,4 +1,4 @@
-package ma.youcode.eonboardservice.Employees;
+package ma.youcode.eonboardservice.projects;
 
 import java.time.LocalDateTime;
 
@@ -7,8 +7,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
@@ -18,7 +16,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import ma.youcode.eonboardservice.Sites.Site;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -26,26 +23,16 @@ import ma.youcode.eonboardservice.Sites.Site;
 @ToString
 @Setter
 @Getter
-@Table(name = "employees")
+@Table(name = "project_family")
 @Entity
-public class Employee {
-
+public class ProjectFamily {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private String employeeCode;
     private String name;
-    private String email;
-    private String role;
-    
-    @ManyToOne
-    @JoinColumn(name = "siteId")
-    private Site site;
-
-
+    private String description;
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "createdAt", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    @Column(name = "created_at", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private LocalDateTime createdAt;
 
-    
 }

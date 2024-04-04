@@ -93,9 +93,17 @@ public class FilterService {
                     .certifications(MatchedCertifications)
                     .skills(Matchedskills)
                     .build();
+            var nameSplit = candidate.get("name").split(" ");
+            var firstName = nameSplit[0];
+            String lastName = "";
+            for(int i=1; i<nameSplit.length;i++){
+                lastName+= nameSplit[i];
+            }
             Candidate candidateEntity = Candidate.builder()
                     .email(email)
                     .certifications(MatchedCertifications)
+                    .lastName(lastName)
+                    .firstName(firstName)
                     .linkedIn(linkedIn)
                     .phoneNumber(phone)
                     .skills(Matchedskills)

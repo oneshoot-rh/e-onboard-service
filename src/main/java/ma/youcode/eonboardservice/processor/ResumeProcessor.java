@@ -51,7 +51,6 @@ public class ResumeProcessor {
                 uploadedFiles++;
                 try {
                     Map<String, String> extractedObjectFromPdf = extractorService.extractTextFromPdf(fileDistination);
-                    extractedObjectFromPdf.put("resumeId", file.getOriginalFilename());
                     candidateData.add(extractedObjectFromPdf);
                     log.info("Text extracted successfully");
                     isProcessed = true;

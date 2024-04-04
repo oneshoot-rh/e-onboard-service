@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -69,7 +70,9 @@ public class IPdfTextExtractorServiceImpl implements IPdfTextExtractorService {
 
             String text = textStripper.getText(document);
             var categorized=  categorizeText(text);
+            categorized.put("resumeId", file.getName()+ "-"+LocalDateTime.now());
             categorized.put("Candidate ID", UUID.randomUUID().toString());
+            categorized.put("name", this.extractNameFromPdf(pdfPath));
             return categorized;
         } catch (IOException e) {
             e.printStackTrace();
@@ -98,5 +101,56 @@ public class IPdfTextExtractorServiceImpl implements IPdfTextExtractorService {
         return categorizedText;
     }
 
+
+    @Override
+    public String extractNameFromPdf(String pdfPath){
+        File file = new File(pdfPath);
+        log.info("Extracting candidate name from resume file: {}", file.getName());
+        try (PDDocument document = PDDocument.load(file)) {
+            NameFromResumeExtractor stripper = new NameFromResumeExtractor();
+            stripper.setStartPage(1);
+            stripper.setEndPage(1);
+            stripper.getText(document);
+
+            return stripper.getTextWithHighestFontSize();
+
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return "";
+    }
+
+
+    private class NameFromResumeExtractor extends PDFTextStripper {
+        public NameFromResumeExtractor() throws IOException {
+            super();
+        }
+        String textWithHighestFontSize = "";
+        float highestFontSize = 0;
+        boolean reached = false ;
+
+        @Override
+        protected void processTextPosition(TextPosition text) {
+            // Get font size of current text position
+            float fontSize = text.getFontSize();
+
+            // Compare font size with the highest font size
+            if (fontSize > highestFontSize) {
+                highestFontSize = fontSize;
+                textWithHighestFontSize = text.getUnicode();
+                reached = true;
+            }else if(reached && fontSize==highestFontSize){
+                textWithHighestFontSize+= text.toString();
+            }else {
+                reached = false ; 
+            }
+
+        }
+        public String getTextWithHighestFontSize(){
+            return this.textWithHighestFontSize;
+        }
+        
+    }
 
 }

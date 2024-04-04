@@ -7,4 +7,6 @@ public interface IPdfTextExtractorService {
     Map<String, String> extractTextFromPdf(String pdfPath) throws FileNotFoundException;
 
     Map<String, String> categorizeText(String text);
+
+    String extractNameFromPdf(String path);
 }
